@@ -47,7 +47,7 @@ final class JsonRequestHandlerHandleTest extends TestCase
 
         $outputJson = (string) $response->getBody();
 
-        static::assertEquals($expectedJson, $outputJson);
+        static::assertSame($expectedJson, $outputJson);
     }
 
     public function provideJsonRpcRequestBody()

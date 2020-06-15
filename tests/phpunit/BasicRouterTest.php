@@ -32,7 +32,7 @@ final class BasicRouterTest extends TestCase
 
         $router->add('method', $guardDispatcher);
 
-        $this->assertEquals($guardDispatcher, $router->run('method'));
+        static::assertSame($guardDispatcher, $router->run('method'));
     }
 
     public function testCannotDeclareDuplicateMethod()

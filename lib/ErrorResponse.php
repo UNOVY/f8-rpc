@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace F8\Rpc;
 
-use JsonSerializable;
 use Throwable;
 
 class ErrorResponse extends AbstractResponse

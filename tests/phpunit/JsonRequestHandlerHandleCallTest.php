@@ -14,7 +14,6 @@ use Exception;
 use F8\IO\GuardDispatcher;
 use F8\IO\Interfaces\ContextFactoryInterface;
 use F8\IO\Interfaces\ContextInterface;
-use F8\IO\Interfaces\GuardDispatcherInterface;
 use F8\IO\Interfaces\InputInterface;
 use F8\IO\Interfaces\OutputInterface;
 use F8\IO\Interfaces\TaskInterface;
@@ -25,7 +24,6 @@ use F8\Rpc\JsonRequestHandler;
 use F8\Rpc\Notification;
 use F8\Rpc\Request;
 use F8\Rpc\ResultResponse;
-use F8\Rpc\RpcException;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -62,7 +60,7 @@ final class JsonRequestHandlerHandleCallTest extends TestCase
         $response = $requestHandler->handleCall($request);
 
         static::assertInstanceOf(ResultResponse::class, $response);
-        static::assertEquals($request->getId(), $response->getId());
+        static::assertSame($request->getId(), $response->getId());
     }
 
     public function testThrowingTaskReturnsErrorResponse()
@@ -76,7 +74,7 @@ final class JsonRequestHandlerHandleCallTest extends TestCase
         $response = $requestHandler->handleCall($request);
 
         static::assertInstanceOf(ErrorResponse::class, $response);
-        static::assertEquals($request->getId(), $response->getId());
+        static::assertSame($request->getId(), $response->getId());
     }
 
     private function createRequest()
@@ -122,7 +120,6 @@ final class JsonRequestHandlerHandleCallTest extends TestCase
 
         return $taskProphecy->reveal();
     }
-
 
     private function createRequestHandler(array $map = []): JsonRequestHandler
     {
