@@ -42,12 +42,16 @@ class JsonRequestHandler extends AbstractRequestHandler
         }
 
         foreach ($calls as $call) {
-            if ($call instanceof Request) {
-                $responses[] = $this->handleCall($call);
-            } elseif ($call instanceof Notification) {
-                $this->handleCall($call);
-            } elseif ($call instanceof RpcException) {
+            if ($call instanceof RpcException) {
                 $responses[] = new ErrorResponse($call->getCallId(), $call);
+
+                continue;
+            }
+
+            $response = $this->handleCall($call);
+
+            if ($call instanceof Request && $response) {
+                $responses[] = $response;
             }
         }
 
@@ -65,9 +69,6 @@ class JsonRequestHandler extends AbstractRequestHandler
 
     /**
      * @todo Allow integration-level error handling/pre-processing?
-     *
-     * @param Notification $call
-     * @return AbstractResponse|null
      */
     public function handleCall(Notification $call): ?AbstractResponse
     {

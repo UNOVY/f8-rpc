@@ -14,11 +14,12 @@ use F8\Rpc\AbstractResponse;
 use F8\Rpc\BatchRequest;
 use F8\Rpc\Notification;
 use F8\Rpc\Request;
+use F8\Rpc\RpcException;
 
 interface SerializerInterface
 {
     /**
-     * @return BatchRequest|Notification|Request
+     * @return BatchRequest|Notification|Request|RpcException
      */
     public static function deserializeCalls(
         string $body,

@@ -16,12 +16,15 @@ use stdClass;
 
 class JsonSerializer implements SerializerInterface
 {
+    /**
+     * @return BatchRequest|Notification|Request|RpcException
+     */
     public static function deserializeCalls(
         string $body,
         int $paramsDepth = 0,
         int $jsonOptions = 0
     ) {
-        /** @var array<stdClass|RpcException> */
+        /** @var array<null|RpcException|stdClass> */
         $calls = [];
 
         try {
@@ -80,7 +83,12 @@ class JsonSerializer implements SerializerInterface
             : $serializedCalls[0];
     }
 
-    public static function deserializeCall(stdClass $call)
+    /**
+     * @throws RpcException
+     *
+     * @return Notification|Request
+     */
+    public static function deserializeCall(stdClass $call): Notification
     {
         if (!isset($call->id)) {
             $isNotification = true;
